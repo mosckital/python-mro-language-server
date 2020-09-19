@@ -1,0 +1,5 @@
+# ignore python relevant files
+__pycache__
+
+# ignore tox files
+.tox
