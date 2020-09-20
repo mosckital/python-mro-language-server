@@ -3,3 +3,11 @@ __pycache__
 
 # ignore tox files
 .tox
+
+# ignore the generated documentation htmls
+docs/html
+
+# ignore build files
+build
+dist
+mrols.egg-info
