@@ -2,6 +2,7 @@ import logging
 import os
 import socketserver
 import threading
+import argparse
 from functools import partial
 from typing import Callable, Optional
 from mrols.mro_lang_server import MROLanguageServer
@@ -77,4 +78,12 @@ def start_tcp_lang_server(bind_addr, port, check_parent_process, handler_class):
 
 
 if __name__ == "__main__":
-    start_tcp_lang_server('127.0.0.1', 3000, False, MROLanguageServer)
+    parser = argparse.ArgumentParser(
+        description='Start the Python MRO Language Server'
+    )
+    parser.add_argument(
+        'port', default=3000, nargs='?', type=int,
+        help='the port to use by the language server'
+    )
+    args = parser.parse_args()
+    start_tcp_lang_server('127.0.0.1', args.port, False, MROLanguageServer)
