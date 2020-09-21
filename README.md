@@ -6,6 +6,9 @@ A simple Python language server to provide **MRO** (Method Resolution Order) inf
 
 This project conforms to Microsoft's [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) but only support Hover and CodeLens requests. Python 3.6+ are supported.
 
+![Continuous Integration Status](https://github.com/mosckital/vscode_python_mro/workflows/Continuous%20Integration/badge.svg)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+
 ## Installation
 
 The Python MRO language server can be easily installed by:
