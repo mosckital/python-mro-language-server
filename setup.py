@@ -10,7 +10,7 @@ with open(path.join(DIR, 'README.md')) as f:
     README = f.read()
 
 setup(
-    name='mrols',
+    name='python-mro-language-server',
     packages=['mrols'],
     description="A simple Python language server to provide MRO (Method Resolution Order) inference via Hover and CodeLens.",
     long_description=README,

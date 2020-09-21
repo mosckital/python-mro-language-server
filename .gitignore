@@ -10,4 +10,4 @@ docs/html
 # ignore build files
 build
 dist
-mrols.egg-info
+*.egg-info
