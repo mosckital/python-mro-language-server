@@ -11,3 +11,6 @@ docs/html
 build
 dist
 *.egg-info
+
+# ignore the pyenv version
+.python-version

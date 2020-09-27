@@ -16,7 +16,7 @@ setup(
     long_description=README,
     long_description_content_type='text/markdown',
     install_requires=INSTALL_PACKAGES,
-    version='0.0.1.dev1',
+    version='0.0.1',
     url='https://github.com/mosckital/python-mro-language-server',
     author='Kaiyan XIAO',
     author_email='k.max.xiao@gmail.com',
