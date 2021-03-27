@@ -14,6 +14,7 @@ class MROAnalyser:
     immediately minused by one to change from 1-based (Jedi standard or
     AST standard) to 0-based (LSP standard).
     """
+
     def __init__(self, root_dir: str) -> None:
         # the root path of the Python project directory
         self.root_dir = root_dir
@@ -31,7 +32,7 @@ class MROAnalyser:
         self.calculator.replace_content_in_cache(script_path, content)
 
     def update_script_content(self, script_path: str, start_pos: Tuple[int,
-                                                                      int],
+                                                                       int],
                               end_pos: Tuple[int, int], change: str) -> None:
         """
         To update the cached content of a script by an incremental change.
@@ -44,7 +45,8 @@ class MROAnalyser:
                 (line, character)
             change: the text of the incremental changes
         """
-        self.calculator.update_content_in_cache(script_path, start_pos, end_pos, change)
+        self.calculator.update_content_in_cache(
+            script_path, start_pos, end_pos, change)
 
     def update_fetch_code_lens(self, script_path: str) -> Sequence[Dict]:
         """
@@ -52,7 +54,7 @@ class MROAnalyser:
 
         Args:
             script_path: the path of the target script
-        
+
         Returns:
             the list of the found MRO code lenses
         """
@@ -69,14 +71,14 @@ class MROAnalyser:
             script_path: the path of the target script
             position: the position of the cursor to request hover information,
                 in format (line, character)
-        
+
         Returns:
             the hover information conforming to the Language Server Protocol
             Hover Request
         """
         self.calculator.update_one(script_path)
         for lens, (start_pos, end_pos) in \
-            self.calculator.get_code_lens_and_range(script_path):
+                self.calculator.get_code_lens_and_range(script_path):
             if start_pos <= position < end_pos:
                 return {
                     'contents': lens['data'],

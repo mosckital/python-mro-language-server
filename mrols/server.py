@@ -16,8 +16,8 @@ class _StreamHandlerWrapper(socketserver.StreamRequestHandler, object):
 
     delegate = None
 
-    DELEGATE_CLASS : Optional[Callable] = None
-    SHUTDOWN_CALL : Optional[Callable] = None
+    DELEGATE_CLASS: Optional[Callable] = None
+    SHUTDOWN_CALL: Optional[Callable] = None
 
     def setup(self):
         super(_StreamHandlerWrapper, self).setup()
@@ -54,11 +54,11 @@ def start_tcp_lang_server(bind_addr, port, check_parent_process, handler_class):
 
     # Construct a custom wrapper class around the user's handler_class
     wrapper_class = type(
-     handler_class.__name__ + 'Handler',
-     (_StreamHandlerWrapper,),
-     {'DELEGATE_CLASS': partial(handler_class,
-              check_parent_process=check_parent_process),
-      'SHUTDOWN_CALL': partial(shutdown_server, check_parent_process)}
+        handler_class.__name__ + 'Handler',
+        (_StreamHandlerWrapper,),
+        {'DELEGATE_CLASS': partial(handler_class,
+                                   check_parent_process=check_parent_process),
+         'SHUTDOWN_CALL': partial(shutdown_server, check_parent_process)}
     )
 
     server = socketserver.TCPServer((bind_addr, port),

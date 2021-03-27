@@ -1,3 +1,5 @@
+from mrols.parsed_custom_class import ParsedCustomClass
+from mrols.parsed_package_class import ParsedPackageClass, PARSED_OBJECT_CLASS
 import jedi
 from typing import Sequence, Dict, Set, List, Tuple
 from jedi.api import Script
@@ -14,22 +16,22 @@ class MROCalculator:
     """
 
     def __init__(
-            self,
-            root_dir: str,
-        ) -> None:
+        self,
+        root_dir: str,
+    ) -> None:
         self.root_dir = root_dir
         self.project = jedi.Project(path=root_dir)
         # cache the actual codes as lines
         # this cache is very useful as there will be unsaved changes
         self.content_cache: Dict[str, Sequence[str]] = {}
         # script path -> Jedi script
-        self.jedi_scripts_by_path : Dict[str, Script] = {}
+        self.jedi_scripts_by_path: Dict[str, Script] = {}
         # script path -> ParsedClass list of the script
-        self.parsed_names_by_path : Dict[str, Sequence[ParsedClass]] = {}
+        self.parsed_names_by_path: Dict[str, Sequence[ParsedClass]] = {}
         # class full name -> ParsedClass
-        self.parsed_name_by_full_name : Dict[str, ParsedClass] = {}
+        self.parsed_name_by_full_name: Dict[str, ParsedClass] = {}
         # set of the outdated scripts' path
-        self.outdated_scripts : Set[str] = set()
+        self.outdated_scripts: Set[str] = set()
 
     def replace_content_in_cache(self, script_path: str, content: str) -> None:
         """
@@ -52,8 +54,8 @@ class MROCalculator:
         self.mark_script_outdated(script_path)
 
     def update_content_in_cache(self, script_path: str, start_pos: Tuple[int,
-                                                                      int],
-                              end_pos: Tuple[int, int], change: str) -> None:
+                                                                         int],
+                                end_pos: Tuple[int, int], change: str) -> None:
         """
         To update the cached content of a script by an incremental change.
 
@@ -119,7 +121,7 @@ class MROCalculator:
         ]
         for parsed in self.parsed_names_by_path[script_path]:
             self.parsed_name_by_full_name[parsed.full_name] = parsed
-    
+
     def mark_script_outdated(self, outdated_path: str):
         """
         Mark one script as outdated, so all relevant cached intermediate results
@@ -150,7 +152,7 @@ class MROCalculator:
         # in iteration
         for outdated_path in self.outdated_scripts.copy():
             self._update_script(outdated_path)
-    
+
     def update_one(self, script_path: str):
         """
         Update the one specific outdated script, given its path.
@@ -160,14 +162,14 @@ class MROCalculator:
         """
         if script_path in self.outdated_scripts:
             self._update_script(script_path)
-    
+
     def get_code_lens(self, script_path: str) -> Sequence[Dict]:
         """
         Get the code lens list of the given script.
 
         Args:
             script_path: the path of the target script
-        
+
         Returns:
             the list of code lens in the script
         """
@@ -176,7 +178,7 @@ class MROCalculator:
         return [
             parsed.code_lens for parsed in self.parsed_names_by_path[script_path]
         ]
-    
+
     def get_code_lens_and_range(
         self, script_path: str
     ) -> List[Tuple[Dict, Tuple[Tuple[int, int], Tuple[int, int]]]]:
@@ -186,7 +188,7 @@ class MROCalculator:
 
         Args:
             script_path: the path of the given script
-        
+
         Returns:
             the list of the code lens and range
         """
@@ -203,7 +205,7 @@ class MROCalculator:
             )
             for parsed in self.parsed_names_by_path[script_path]
         ]
-    
+
     @staticmethod
     def _is_original_class(class_name: Name, script_context: Name) -> bool:
         """
@@ -212,7 +214,7 @@ class MROCalculator:
         Args:
             class_name: the Name of the target class
             script_context: the context of the target script
-        
+
         Returns:
             `True` if the class is an originally defined class or `False`
             otherwise
@@ -223,9 +225,9 @@ class MROCalculator:
         # has the `full_name` field
         return class_name.type == 'class' and \
             class_name.goto()[0].full_name.startswith(
-            script_context.module_name
-        )
-    
+                script_context.module_name
+            )
+
     def parse_class_by_jedi_name(
         self, jedi_name: Name
     ) -> ParsedClass:
@@ -234,7 +236,7 @@ class MROCalculator:
 
         Args:
             jedi_name: the Jedi Name of the target class to parse
-        
+
         Returns:
             The parsed class in ParsedClass
         """
@@ -257,7 +259,3 @@ class MROCalculator:
             return ParsedCustomClass(jedi_name, self)
         else:
             return ParsedPackageClass(jedi_name)
-
-
-from mrols.parsed_package_class import ParsedPackageClass, PARSED_OBJECT_CLASS
-from mrols.parsed_custom_class import ParsedCustomClass

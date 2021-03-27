@@ -13,15 +13,15 @@ class ParsedClass(ABC):
     initialisation of the instance.
     """
 
-    OBJECT_CLASS : Name = jedi.Script(code='object').infer(1, 0)[0]
+    OBJECT_CLASS: Name = jedi.Script(code='object').infer(1, 0)[0]
     """A Jedi Name to represent the `object` class."""
     CONFLICT_MRO_MSG = 'Conflict MRO!!!'
 
     def __init__(self, jedi_name: Name) -> None:
         self.jedi_name = jedi_name
         self.full_name = self.jedi_name.full_name if self.jedi_name.full_name else ''
-        self.start_pos : Tuple[int, int] = (0, 0)
-        self.end_pos : Tuple[int, int] = (0, 0)
+        self.start_pos: Tuple[int, int] = (0, 0)
+        self.end_pos: Tuple[int, int] = (0, 0)
         self._code_lens = None
 
     @property
@@ -43,8 +43,8 @@ class ParsedClass(ABC):
         try:
             return [parsed.jedi_name.name for parsed in self.mro_parsed_list]
         except TypeError:
-            return [self.CONFLICT_MRO_MSG]    
-    
+            return [self.CONFLICT_MRO_MSG]
+
     def get_code_lens(self):
         """Get the Code Lens associated with this parsed class."""
         return {
@@ -62,7 +62,7 @@ class ParsedClass(ABC):
             },
             'data': self.mro_list,
         }
-    
+
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, ParsedClass):
             return False

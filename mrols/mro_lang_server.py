@@ -44,14 +44,14 @@ class MROLanguageServer(MethodDispatcher):
         self._analyser = MROAnalyser(root_dir=root_dir)
         log.info("Initialising custom Python MRO language server.")
         return {"capabilities": {
-         "textDocumentSync": {
-          "openClose": True,
-          "change": self._sync_kind,
-         },
-         "codeLensProvider": {
-          "resolveProvider": True,
-         },
-         "hoverProvider": True,
+            "textDocumentSync": {
+                "openClose": True,
+                "change": self._sync_kind,
+            },
+            "codeLensProvider": {
+                "resolveProvider": True,
+            },
+            "hoverProvider": True,
         }}
 
     def m_text_document__did_open(self, textDocument=None):
@@ -100,11 +100,11 @@ class MROLanguageServer(MethodDispatcher):
     def m_code_lens__resolve(self, **codeLens):
         """Fill up the details of a code lens."""
         codeLens['command'] = {
-         'command': 'pythonMRO.showMRO',
-         'title': 'Show MRO list',
-         'arguments': [
-          '\n'.join(codeLens['data']),
-         ]
+            'command': 'pythonMRO.showMRO',
+            'title': 'Show MRO list',
+            'arguments': [
+                '\n'.join(codeLens['data']),
+            ]
         }
         return codeLens
 
@@ -124,7 +124,7 @@ class MROLanguageServer(MethodDispatcher):
 
         Args:
             uri: the URI to convert
-        
+
         Returns:
             The file path of the URI
         """
