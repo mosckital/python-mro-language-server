@@ -11,6 +11,7 @@ pyyaml = "*"
 tox = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
+autopep8 = "*"
 
 [packages]
 python-jsonrpc-server = "*"
