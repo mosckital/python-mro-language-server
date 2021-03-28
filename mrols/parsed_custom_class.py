@@ -1,7 +1,6 @@
 import ast
 from typing import Tuple, Sequence
 from jedi.api.classes import Name
-from mrols.calculator import MROCalculator
 from mrols.parsed_class import ParsedClass
 from mrols.parsed_package_class import ParsedPackageClass
 
@@ -15,10 +14,12 @@ class ParsedCustomClass(ParsedClass):
     initialisation of the instance.
     """
 
-    def __init__(self, jedi_name: Name, calculator: MROCalculator) -> None:
+    def __init__(self, jedi_name: Name, calculator: 'MROCalculator') -> None:  # type: ignore
         super().__init__(jedi_name)
         self._calculator = calculator
-        module_path = jedi_name.module_path
+        # attention: resolve() will raise FileNotFoundError if in Python3.5-
+        # or if pass strict=True in Python3.6+
+        module_path = str(jedi_name.module_path.resolve())
         # the Jedi Name should have `module_path` available
         if (not module_path):
             raise ValueError(

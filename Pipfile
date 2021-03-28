@@ -12,6 +12,7 @@ tox = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
 autopep8 = "*"
+pytest-xdist = "*"
 
 [packages]
 python-jsonrpc-server = "*"
